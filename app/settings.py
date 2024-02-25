@@ -34,6 +34,14 @@ SECRET_KEY = getenv('DJANGO_SECRET_KEY', get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = getenv('DEBUG', 'False') == 'True'
 
+DOMAIN = getenv('DOMAIN')
+
+SITE_NAME = 'Auth'
+
+AUTH_USER_MODEL = 'users.UserAccount'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 ALLOWED_HOSTS = getenv(
     'DJANGO_ALLOWED_HOSTS',
     '127.0.0.1,localhost'
@@ -149,12 +157,15 @@ REST_FRAMEWORK = {
 # }
 
 DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': 'password-reset/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
+    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': False,
     'SEND_ACTIVATION_EMAIL': True,
     'ACTIVATION_URL': 'activation/{uid}/{token}',
     'USER_CREATE_PASSWORD_RETYPE': True,
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'TOKEN_MODEL': None,
+    'SERIALIZERS': {},
     # 'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': getenv('REDIRECT_URLS').split(','),
 }
 
@@ -162,7 +173,3 @@ DJOSER = {
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-AUTH_USER_MODEL = 'users.UserAccount'
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
