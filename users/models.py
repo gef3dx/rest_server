@@ -37,14 +37,17 @@ class UserAccountManager(BaseUserManager):
 
 
 class UserAccount(AbstractBaseUser, PermissionsMixin):
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    phone = models.CharField(max_length=255)
-    email = models.EmailField(unique=True, max_length=255)
+    first_name = models.CharField(verbose_name='Имя', max_length=255)
+    last_name = models.CharField(verbose_name='Фамилия', max_length=255)
+    phone = models.CharField(verbose_name='Телефон', max_length=255)
+    email = models.EmailField(verbose_name='Email', unique=True,
+                              max_length=255)
 
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
+    is_active = models.BooleanField(verbose_name='Активный', default=True)
+    is_staff = models.BooleanField(verbose_name='Есть доступ в админку',
+                                   default=False)
+    is_superuser = models.BooleanField(verbose_name='Супер пользватель',
+                                       default=False)
 
     objects = UserAccountManager()
 
@@ -53,6 +56,10 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+    class Meta:
+        verbose_name = 'Пользователя'
+        verbose_name_plural = 'Пользователи'
 
 # Method POST
 # {
